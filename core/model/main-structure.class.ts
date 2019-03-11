@@ -4,10 +4,10 @@ import { GameBlockModel } from "./game-block-model.class";
 
 export class MainStructure {
 
-  scripts: {[key: string]: ScriptModel} = {};
-  blocks: {[key: string]: GameBlockModel} = {};
+  scripts: {[key: string]: ScriptModel};
+  blocks: {[key: string]: GameBlockModel};
 
-  // peut-être pas nécessaire si on emploie un nom spécifique pour le bloc de départ
+  // peut-être pas nécessaire si on emploie un nom spécifique pour le bloc d'entrée
   entryBlockId: string;
 
   static loadFromParsingResult(result: ParsingResult): MainStructure {
