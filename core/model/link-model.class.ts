@@ -23,9 +23,7 @@ export class LinkModel {
 
   static loadLinks(results: ParsingResult[]): LinkModel[] {
     if (results) {
-      let links: LinkModel[] = [];
-      results.forEach(res => links.push(LinkModel.loadLink(res)));
-      return links;
+      return results.map(res => LinkModel.loadLink(res));
     }
   }
 }
