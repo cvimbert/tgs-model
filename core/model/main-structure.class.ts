@@ -6,6 +6,7 @@ export class MainStructure {
 
   scripts: {[key: string]: ScriptModel};
   blocks: {[key: string]: GameBlockModel};
+  blocksArray: GameBlockModel[] = [];
 
   // peut-être pas nécessaire si on emploie un nom spécifique pour le bloc d'entrée
   entryBlockId: string;
@@ -19,6 +20,11 @@ export class MainStructure {
     structure.scripts = ScriptModel.loadScripts(scriptResults);
     structure.blocks = GameBlockModel.loadBlocks(blocksResults);
     structure.entryBlockId = GameBlockModel.getBlockId(blocksResults[0]);
+
+    //
+    for (let key in structure.blocks) {
+      structure.blocksArray.push(structure.blocks[key]);
+    }
 
     return structure;
   }
