@@ -37,7 +37,7 @@ export class ComparisonOperandModel {
         }
     }
 
-    console.log("operand", result, model);
+    //console.log("operand", result, model);
 
     return model;
   }

@@ -18,8 +18,4 @@ export class ConditionModel {
 
     return model;
   }
-
-  evaluate(): boolean {
-    return true;
-  }
 }

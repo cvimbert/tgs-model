@@ -3,3 +3,8 @@ export { BlockLineType } from "./core/model/enums/block-line-types.enum";
 export { GameBlockModel } from "./core/model/game-block-model.class";
 export { LinkModel } from "./core/model/link-model.class";
 export { MainStructure } from "./core/model/main-structure.class";
+export { ConditionModel } from "./core/model/condition-model.class";
+export { ComparisonOperandModel } from "./core/model/comparison-operand-model.class";
+export { BooleanComparisonModel } from "./core/model/boolean-comparison-model.class";
+export { ComparisonOperator } from "./core/enums/comparison-operator.enum";
+export { ComparisonOperandType } from "./core/enums/comparison-operand-type.enum";
