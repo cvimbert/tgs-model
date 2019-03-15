@@ -1,4 +1,4 @@
 export enum ComparisonOperandType {
-  VARIABLE,
-  VALUE
+  VARIABLE = "variable",
+  VALUE = "value"
 }

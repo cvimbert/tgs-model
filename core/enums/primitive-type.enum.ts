@@ -1,5 +1,5 @@
 export enum PrimitiveType {
-  BOOLEAN,
-  NUMBER,
-  STRING
+  BOOLEAN = "boolean",
+  NUMBER = "number",
+  STRING = "string"
 }

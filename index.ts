@@ -8,3 +8,6 @@ export { ComparisonOperandModel } from "./core/model/comparison-operand-model.cl
 export { BooleanComparisonModel } from "./core/model/boolean-comparison-model.class";
 export { ComparisonOperator } from "./core/enums/comparison-operator.enum";
 export { ComparisonOperandType } from "./core/enums/comparison-operand-type.enum";
+export { ScriptModel } from './core/model/script-model.class';
+export { ScriptInstructionModel } from './core/model/script-instruction-model.class';
+export { ScriptInstructionType } from './core/enums/script-instruction-type.enum';
