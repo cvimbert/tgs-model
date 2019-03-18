@@ -11,3 +11,5 @@ export { ComparisonOperandType } from "./core/enums/comparison-operand-type.enum
 export { ScriptModel } from './core/model/script-model.class';
 export { ScriptInstructionModel } from './core/model/script-instruction-model.class';
 export { ScriptInstructionType } from './core/enums/script-instruction-type.enum';
+export { ArgumentModel } from './core/model/argument-model.class';
+export { ArgumentType } from './core/enums/argument-type.enum';

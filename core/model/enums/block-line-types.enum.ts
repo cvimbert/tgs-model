@@ -1,4 +1,6 @@
 export enum BlockLineType {
   SIMPLE,
-  COMPLEX
+  COMPLEX,
+  FORMAT_OPENER,
+  FORMAT_CLOSER
 }

@@ -36,7 +36,7 @@ export class ScriptInstructionModel {
       model.instructions = this.loadInstructions(ifRes.getResults("commandsGroup/instructions"));
     }
 
-    console.log("instruction", result, model);
+    //console.log("instruction", result, model);
 
     return model;
   }

@@ -12,7 +12,7 @@ export class GameBlockModel {
     let dic: {[key: string]: GameBlockModel} = {};
 
     results.forEach(res => {
-      let id: string = res.getValue("blockId/blockId@id")[0];
+      let id: string = res.getFirstValue("blockId/blockId@id");
       dic[id] = GameBlockModel.loadBlock(res, id);
     });
 
@@ -21,16 +21,18 @@ export class GameBlockModel {
 
   static loadBlock(result: ParsingResult, id: string): GameBlockModel {
     let block: GameBlockModel = new GameBlockModel();
-    block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
+
     block.id = id;
-    //console.log("block", result); 
+    block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
     block.links = LinkModel.loadLinks(result.getResults("blockLinks"));
+
+    //console.log("block", result);
 
     return block;
   }
 
   // utile ?
   static getBlockId(result: ParsingResult): string {
-    return result.getValue("blockId/blockId@id")[0];
+    return result.getFirstValue("blockId/blockId@id");
   }
 }
