@@ -8,7 +8,7 @@ export class GameBlockLineModel {
   condition: ConditionModel;
   lines: GameBlockLineModel[];
   text: string;
-  format: string;
+  formats: string[] = [];
 
   static loadLine(result: ParsingResult): GameBlockLineModel {
     let line: GameBlockLineModel = new GameBlockLineModel();
@@ -27,26 +27,24 @@ export class GameBlockLineModel {
 
     if (subResults) {
       line.type = BlockLineType.COMPLEX;
-      line.condition = ConditionModel.loadCondition(subResults[0].getFirstResult("condition"));
+
+      let conditionResult: ParsingResult = subResults[0].getFirstResult("condition/conditionBody");
+
+      if (conditionResult) {
+        line.condition = ConditionModel.loadCondition(conditionResult);
+      }
+
       line.lines = GameBlockLineModel.loadLines(subResults[0].getResults("blocks"));
-      return line;
-    }
 
-    subResults = result.getResults("formatOpener");
+      let formats: ParsingResult[] = subResults[0].getResults("format");
 
-    if (subResults) {
-      line.type = BlockLineType.FORMAT_OPENER;
-      line.format = subResults[0].groups["name"]
-      //console.log("format opener", subResults, line);
-      return line;
-    }
+      if (formats) {
+        formats.forEach(res => {
+          line.formats.push(res.groups["name"]);
+        });
+      }
 
-    subResults = result.getResults("formatCloser");
-
-    if (subResults) {
-      line.type = BlockLineType.FORMAT_CLOSER;
-      line.format = subResults[0].groups["name"]
-      //console.log("format closer", subResults);
+      //console.log(line.formats);
       return line;
     }
   }
