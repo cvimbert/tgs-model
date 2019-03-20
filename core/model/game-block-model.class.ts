@@ -1,10 +1,12 @@
 import { ParsingResult } from "tgs-parser";
 import { GameBlockLineModel } from "./game-block-line-model.class";
 import { LinkModel } from "./link-model.class";
+import { ScriptModel } from "./script-model.class";
 
 export class GameBlockModel {
 
   id: string;
+  scripts: {[key: string]: ScriptModel };
   lines: GameBlockLineModel[] = [];
   links: LinkModel[] = [];
 
@@ -26,7 +28,13 @@ export class GameBlockModel {
     block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
     block.links = LinkModel.loadLinks(result.getResults("blockLinks"));
 
-    //console.log("block", result);
+    let scripts: ParsingResult[] = result.getResults("scripts");
+
+    if (scripts) {
+      block.scripts = ScriptModel.loadScripts(result.getResults("scripts"));
+    }
+
+    console.log("block", result, block);
 
     return block;
   }

@@ -36,13 +36,7 @@ export class GameBlockLineModel {
 
       line.lines = GameBlockLineModel.loadLines(subResults[0].getResults("blocks"));
 
-      let formats: ParsingResult[] = subResults[0].getResults("format");
-
-      if (formats) {
-        formats.forEach(res => {
-          line.formats.push(res.groups["name"]);
-        });
-      }
+      line.formats = subResults[0].getValue("format/formatsList@name");
 
       //console.log(line.formats);
       return line;
