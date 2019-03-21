@@ -1,6 +1,7 @@
 import { ParsingResult } from "tgs-parser";
 import { ConditionModel } from "./condition-model.class";
 import { BlockLineType } from "./enums/block-line-types.enum";
+import { TagModel } from "./tag-model.class";
 
 export class GameBlockLineModel {
 
@@ -9,6 +10,7 @@ export class GameBlockLineModel {
   lines: GameBlockLineModel[];
   text: string;
   formats: string[] = [];
+  tag: TagModel;
 
   static loadLine(result: ParsingResult): GameBlockLineModel {
     let line: GameBlockLineModel = new GameBlockLineModel();
@@ -41,11 +43,18 @@ export class GameBlockLineModel {
       //console.log(line.formats);
       return line;
     }
+
+    subResults = result.getResults("tag");
+
+    if (subResults) {
+      line.type = BlockLineType.TAG;
+      line.tag = TagModel.loadTag(subResults[0]);
+
+      return line;
+    }
   }
 
   static loadLines(results: ParsingResult[]): GameBlockLineModel[] {
-    let lines: GameBlockLineModel[] = [];
-    results.forEach(res => lines.push(GameBlockLineModel.loadLine(res)));
-    return lines;
+    return results.map(res => GameBlockLineModel.loadLine(res));
   }
 }
