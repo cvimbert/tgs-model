@@ -22,4 +22,8 @@ export class TagModel {
         //console.log("tag", result, model);
         return model;
     }
+
+    getAttribute(attributeName: string): string {
+        return;
+    }
 }
