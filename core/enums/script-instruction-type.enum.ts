@@ -1,4 +1,5 @@
 export enum ScriptInstructionType {
   COMMAND = "command",
-  IF = "if"
+  IF = "if",
+  ASSIGNATION = "assignation"
 }

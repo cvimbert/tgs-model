@@ -2,6 +2,7 @@ import { ParsingResult } from "tgs-parser";
 import { ScriptInstructionType } from "../enums/script-instruction-type.enum";
 import { ConditionModel } from "./condition-model.class";
 import { ArgumentModel } from "./argument-model.class";
+import { ComparisonOperandModel } from './comparison-operand-model.class';
 
 export class ScriptInstructionModel {
 
@@ -14,6 +15,11 @@ export class ScriptInstructionModel {
   // cas if (ou potentiellement for)
   condition: ConditionModel;
   instructions: ScriptInstructionModel[];
+
+  // cas d'une assignation
+  variableName: string;
+  assignationOperator: string;
+  value: ComparisonOperandModel;
 
   static loadInstruction(result: ParsingResult): ScriptInstructionModel {
     let model = new ScriptInstructionModel();
@@ -34,6 +40,22 @@ export class ScriptInstructionModel {
       model.type = ScriptInstructionType.IF;
       model.condition = ConditionModel.loadCondition(ifRes.getFirstResult("condition"));
       model.instructions = this.loadInstructions(ifRes.getResults("commandsGroup/instructions"));
+    }
+
+    let assignationRes: ParsingResult = result.getFirstResult("assignation");
+
+    if (assignationRes) {
+      model.type = ScriptInstructionType.ASSIGNATION;
+      model.variableName = assignationRes.getFirstValue("variable/variableName@name");
+      model.assignationOperator = assignationRes.getFirstResult("operator").getFirstKey();
+
+      let valueResult: ParsingResult = assignationRes.getFirstResult("value");
+
+      if (valueResult) {
+        model.value = ComparisonOperandModel.loadOperand(valueResult);
+      }
+
+      console.log("assignation", assignationRes, model);
     }
 
     //console.log("instruction", result, model);
