@@ -6,7 +6,7 @@ export class ConditionModel {
   conditionName: string;
   booleanValue: BooleanValueModel;
 
-  static loadCondition(result: ParsingResult) {
+  static loadCondition(result: ParsingResult): ConditionModel {
     let model: ConditionModel = new ConditionModel();
 
     //console.log("condition result", result);
@@ -17,5 +17,18 @@ export class ConditionModel {
     }
 
     return model;
+  }
+
+  static loadConditionsDeclarations(results: ParsingResult[]): {[key: string]: ConditionModel} {
+    
+    let conditions: {[key: string]: ConditionModel} = {};
+
+    results.forEach(res => {
+      conditions[res.getFirstValue("conditionName@name")] = this.loadCondition(res.getFirstResult("condition"));
+    });
+
+    //console.log(results, conditions);
+
+    return conditions;
   }
 }

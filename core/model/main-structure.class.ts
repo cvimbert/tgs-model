@@ -1,10 +1,12 @@
 import { ParsingResult } from "tgs-parser";
 import { ScriptModel } from "./script-model.class";
 import { GameBlockModel } from "./game-block-model.class";
+import { ConditionModel } from "./condition-model.class";
 
 export class MainStructure {
 
   scripts: {[key: string]: ScriptModel};
+  conditions: {[key: string]: ConditionModel};
   blocks: {[key: string]: GameBlockModel};
   blocksArray: GameBlockModel[] = [];
 
@@ -13,11 +15,13 @@ export class MainStructure {
 
   static loadFromParsingResult(result: ParsingResult): MainStructure {
 
+    let conditionsResults: ParsingResult[] = result.getResults("conditions") || [];
     let scriptResults: ParsingResult[] = result.getResults("scripts") || [];
     let blocksResults: ParsingResult[] = result.getResults("gameBlocks");
 
     let structure = new MainStructure();
     
+    structure.conditions = ConditionModel.loadConditionsDeclarations(conditionsResults);
     structure.scripts = ScriptModel.loadScripts(scriptResults);
     structure.blocks = GameBlockModel.loadBlocks(blocksResults);
     structure.entryBlockId = GameBlockModel.getBlockId(blocksResults[0]);
@@ -26,6 +30,7 @@ export class MainStructure {
       structure.blocksArray.push(structure.blocks[key]);
     }
 
+    //console.log(structure);
     return structure;
   }
 }
