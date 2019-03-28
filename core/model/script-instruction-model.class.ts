@@ -19,7 +19,7 @@ export class ScriptInstructionModel {
   // cas d'une assignation
   variableName: string;
   assignationOperator: string;
-  value: ComparisonOperandModel;
+  value: ArgumentModel;
 
   static loadInstruction(result: ParsingResult): ScriptInstructionModel {
     let model = new ScriptInstructionModel();
@@ -52,10 +52,10 @@ export class ScriptInstructionModel {
       let valueResult: ParsingResult = assignationRes.getFirstResult("value");
 
       if (valueResult) {
-        model.value = ComparisonOperandModel.loadOperand(valueResult);
+        model.value = ArgumentModel.loadArgument(valueResult);
       }
 
-      console.log("assignation", assignationRes, model);
+      //console.log("assignation", assignationRes, model);
     }
 
     //console.log("instruction", result, model);

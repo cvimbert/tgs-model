@@ -14,14 +14,10 @@ export class LinkModel {
 
     let model: LinkModel = new LinkModel();
 
-    model.text = result.getValue("simpleLinkText@text")[0];
-    model.localLinkRef = result.getValue("link/localRef/blockId@id")[0];
-
-    let globalRef: string = result.getValue("link/globalRef@ref")[0];
-
-    if (globalRef) {
-      model.globalLinkRef = globalRef;
-    }
+    model.text = result.getFirstValue("simpleLinkText@text");
+    
+    model.localLinkRef = result.getFirstValue("link/localRef/blockId@id");
+    model.globalLinkRef = result.getFirstValue("link/globalRef@ref");
 
     let conditionResult: ParsingResult = result.getFirstResult("condition");
 
