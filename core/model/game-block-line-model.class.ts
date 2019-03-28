@@ -55,6 +55,6 @@ export class GameBlockLineModel {
   }
 
   static loadLines(results: ParsingResult[]): GameBlockLineModel[] {
-    return results.map(res => GameBlockLineModel.loadLine(res));
+    return results ? results.map(res => GameBlockLineModel.loadLine(res)) : [];
   }
 }
