@@ -33,8 +33,24 @@ export class LinkModel {
   }
 
   static loadLinks(results: ParsingResult[]): LinkModel[] {
-    if (results) {
-      return results.map(res => LinkModel.loadLink(res));
-    }
+    return results ? results.map(res => this.loadLink(res)) : null;
+  }
+
+  static loadRedirection(result: ParsingResult): LinkModel {
+
+    let model = new LinkModel();
+
+    model.localLinkRef = result.getFirstValue("link/blockId@id");
+
+    let conditionRes: ParsingResult = result.getFirstResult("condition/conditionBody");
+    model.condition = conditionRes ? ConditionModel.loadCondition(conditionRes) : null;
+
+    //console.log(result, model);
+
+    return model;
+  }
+
+  static loadRedirections(results: ParsingResult[]): LinkModel[] {
+    return results ? results.map(res => this.loadRedirection(res)) : null;
   }
 }

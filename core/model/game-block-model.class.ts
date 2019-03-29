@@ -9,6 +9,7 @@ export class GameBlockModel {
   scripts: {[key: string]: ScriptModel };
   lines: GameBlockLineModel[] = [];
   links: LinkModel[] = [];
+  redirections: LinkModel[];
 
   static loadBlocks(results: ParsingResult[]): {[key: string]: GameBlockModel} {
     let dic: {[key: string]: GameBlockModel} = {};
@@ -27,6 +28,7 @@ export class GameBlockModel {
     block.id = id;
     block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
     block.links = LinkModel.loadLinks(result.getResults("blockLinks"));
+    block.redirections = LinkModel.loadRedirections(result.getResults("directLink"));
 
     let scripts: ParsingResult[] = result.getResults("scripts");
 
