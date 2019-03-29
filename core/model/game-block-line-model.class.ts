@@ -55,6 +55,26 @@ export class GameBlockLineModel {
   }
 
   static loadLines(results: ParsingResult[]): GameBlockLineModel[] {
-    return results ? results.map(res => GameBlockLineModel.loadLine(res)) : [];
+    let lines: GameBlockLineModel[] = results ? results.map(res => GameBlockLineModel.loadLine(res)) : [];
+
+    // suppression des premiers vides, et des derniers
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].type == BlockLineType.SIMPLE && !lines[i].text) {
+        lines.splice(i, 1);
+        i--;
+      } else {
+        break;
+      }
+    }
+
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (lines[i].type == BlockLineType.SIMPLE && !lines[i].text) {
+        lines.splice(i, 1);
+      } else {
+        break;
+      }
+    }
+
+    return lines;
   }
 }
