@@ -6,22 +6,27 @@ export class ConditionModel {
   conditionName: string;
   booleanValue: BooleanValueModel;
   blockId: string;
+  negated: boolean = false;
 
   static loadCondition(result: ParsingResult): ConditionModel {
     let model: ConditionModel = new ConditionModel();
 
     //console.log("condition result", result);
-    let booleanResult: ParsingResult[] = result.getResults("booleanValue");
+    let booleanResult: ParsingResult[] = result.getResults("conditionGroup/booleanValue");
 
-    if (booleanResult) {
+    if (booleanResult && booleanResult.length > 0) {
       model.booleanValue = BooleanValueModel.loadBooleanValue(booleanResult[0]);
     }
 
-    let blockResult: ParsingResult = result.getFirstResult("block");
+    let blockResult: ParsingResult = result.getFirstResult("conditionGroup/block");
 
     if (blockResult) {
       model.blockId = blockResult.getFirstValue("blockId@id")
       //console.log(model);
+    }
+
+    if (result.getFirstResult("negation")) {
+      model.negated = true;
     }
 
     return model;
@@ -32,7 +37,7 @@ export class ConditionModel {
     let conditions: {[key: string]: ConditionModel} = {};
 
     results.forEach(res => {
-      conditions[res.getFirstValue("conditionName@name")] = this.loadCondition(res.getFirstResult("condition"));
+      conditions[res.getFirstValue("conditionGroup/conditionName@name")] = this.loadCondition(res.getFirstResult("condition"));
     });
 
     //console.log(results, conditions);
