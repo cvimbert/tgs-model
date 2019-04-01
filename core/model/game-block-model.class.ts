@@ -36,7 +36,7 @@ export class GameBlockModel {
       block.scripts = ScriptModel.loadScripts(result.getResults("scripts"));
     }
 
-    console.log("block", result, block);
+    //console.log("block", result, block);
 
     return block;
   }

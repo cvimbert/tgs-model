@@ -1,5 +1,7 @@
 export enum BlockLineType {
-  SIMPLE,
-  COMPLEX,
-  TAG
+  SIMPLE = "simple",
+  COMPLEX = "complex",
+  TAG = "tag",
+  PARAGRAPH_SEPARATOR = "paragraph_separator",
+  LINE_BREAK = "line_break"
 }

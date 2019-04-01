@@ -20,8 +20,24 @@ export class GameBlockLineModel {
     //console.log(result);
 
     if (subResults) {
-      line.type = BlockLineType.SIMPLE;
-      line.text = subResults[0].getFirstValue("blockline@text");
+
+      //console.log(subResults[0].getFirstKey());
+
+      switch (subResults[0].getFirstKey()) {
+        case "blockline":
+          line.type = BlockLineType.SIMPLE;
+          line.text = subResults[0].getFirstValue("blockline@text");
+          break;
+
+        case "simpleBreak":
+          line.type = BlockLineType.LINE_BREAK;
+          break;
+
+        case "doubleBreak":
+          line.type = BlockLineType.PARAGRAPH_SEPARATOR;
+          break;
+      }
+
       return line;
     }
 
@@ -59,7 +75,7 @@ export class GameBlockLineModel {
 
     // suppression des premiers vides, et des derniers
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].type == BlockLineType.SIMPLE && !lines[i].text) {
+      if (lines[i].type == BlockLineType.PARAGRAPH_SEPARATOR) {
         lines.splice(i, 1);
         i--;
       } else {
@@ -68,7 +84,7 @@ export class GameBlockLineModel {
     }
 
     for (let i = lines.length - 1; i >= 0; i--) {
-      if (lines[i].type == BlockLineType.SIMPLE && !lines[i].text) {
+      if (lines[i].type == BlockLineType.PARAGRAPH_SEPARATOR) {
         lines.splice(i, 1);
       } else {
         break;

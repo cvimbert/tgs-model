@@ -5,6 +5,7 @@ export class ConditionModel {
 
   conditionName: string;
   booleanValue: BooleanValueModel;
+  blockId: string;
 
   static loadCondition(result: ParsingResult): ConditionModel {
     let model: ConditionModel = new ConditionModel();
@@ -14,6 +15,13 @@ export class ConditionModel {
 
     if (booleanResult) {
       model.booleanValue = BooleanValueModel.loadBooleanValue(booleanResult[0]);
+    }
+
+    let blockResult: ParsingResult = result.getFirstResult("block");
+
+    if (blockResult) {
+      model.blockId = blockResult.getFirstValue("blockId@id")
+      //console.log(model);
     }
 
     return model;
