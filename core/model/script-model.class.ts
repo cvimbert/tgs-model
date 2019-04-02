@@ -18,7 +18,7 @@ export class ScriptModel {
   static loadScript(result: ParsingResult): ScriptModel {
     let model = new ScriptModel();
     model.instructions = ScriptInstructionModel.loadInstructions(result.getResults("commandsGroup/instructions"));
-    //console.log(model);
+    console.log(model, result);
     return model;
   }
 }
