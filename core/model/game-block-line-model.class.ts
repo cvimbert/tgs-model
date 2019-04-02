@@ -26,7 +26,7 @@ export class GameBlockLineModel {
       switch (subResults[0].getFirstKey()) {
         case "blockline":
           line.type = BlockLineType.SIMPLE;
-          line.text = subResults[0].getFirstValue("blockline@text");
+          line.text = subResults[0].getFirstValue("blockline/blockline@text");
           break;
 
         case "simpleBreak":
@@ -37,6 +37,9 @@ export class GameBlockLineModel {
           line.type = BlockLineType.PARAGRAPH_SEPARATOR;
           break;
       }
+
+      line.formats = subResults[0].getValue("format/formatsList@name");
+      console.log(line.formats);
 
       return line;
     }
