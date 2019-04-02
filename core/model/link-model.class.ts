@@ -1,5 +1,6 @@
 import { ParsingResult } from "tgs-parser";
 import { ConditionModel } from "./condition-model.class";
+import { LinkDirectiveModel } from "./link-directive-model.class";
 
 export class LinkModel {
 
@@ -7,6 +8,7 @@ export class LinkModel {
   localLinkRef: string;
   globalLinkRef: string;
   condition: ConditionModel;
+  directives: LinkDirectiveModel[];
 
   static loadLink(result: ParsingResult): LinkModel {
 
@@ -28,6 +30,8 @@ export class LinkModel {
       model.condition = ConditionModel.loadCondition(subRes);
       //console.log("ici", model);
     }
+
+    model.directives = LinkDirectiveModel.loadDirectives(result.getResults("linkDirectives/directives"));
 
     return model;
   }
