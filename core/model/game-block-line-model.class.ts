@@ -38,8 +38,8 @@ export class GameBlockLineModel {
           break;
       }
 
-      line.formats = subResults[0].getValue("format/formatsList@name");
-      console.log(line.formats);
+      line.formats = subResults[0].getValue("blockline/format/formatsList@name");
+      //console.log(line.formats);
 
       return line;
     }
