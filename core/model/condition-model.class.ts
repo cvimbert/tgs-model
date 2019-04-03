@@ -11,7 +11,7 @@ export class ConditionModel {
   static loadCondition(result: ParsingResult): ConditionModel {
     let model: ConditionModel = new ConditionModel();
 
-    //console.log("condition result", result);
+    console.log("condition result", result);
     let booleanResult: ParsingResult[] = result.getResults("conditionGroup/booleanValue");
 
     if (booleanResult && booleanResult.length > 0) {
