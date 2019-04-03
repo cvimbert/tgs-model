@@ -1,13 +1,15 @@
 import { ParsingResult } from "tgs-parser";
 import { ConditionModel } from "./condition-model.class";
 import { LinkDirectiveModel } from "./link-directive-model.class";
+import { ComplexConditionModel } from "./complex-condition-model.class";
 
 export class LinkModel {
 
   text: string;
   localLinkRef: string;
   globalLinkRef: string;
-  condition: ConditionModel;
+  //condition: ConditionModel;
+  complexCondition: ComplexConditionModel;
   directives: LinkDirectiveModel[];
 
   static loadLink(result: ParsingResult): LinkModel {
@@ -27,7 +29,9 @@ export class LinkModel {
       //console.log("ccc", conditionResult);
       let subRes: ParsingResult = conditionResult.getFirstResult("conditionBody");
       //console.log("sub", subRes);
-      model.condition = ConditionModel.loadCondition(subRes);
+      //model.condition = ConditionModel.loadCondition(subRes);
+
+      model.complexCondition = ComplexConditionModel.loadCondition(subRes);
       //console.log("ici", model);
     }
 
@@ -47,7 +51,7 @@ export class LinkModel {
     model.localLinkRef = result.getFirstValue("link/blockId@id");
 
     let conditionRes: ParsingResult = result.getFirstResult("condition/conditionBody");
-    model.condition = conditionRes ? ConditionModel.loadCondition(conditionRes) : null;
+    model.complexCondition = conditionRes ? ComplexConditionModel.loadCondition(conditionRes) : null;
 
     //console.log(result, model);
 

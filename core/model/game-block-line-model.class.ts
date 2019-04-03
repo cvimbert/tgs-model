@@ -2,11 +2,13 @@ import { ParsingResult } from "tgs-parser";
 import { ConditionModel } from "./condition-model.class";
 import { BlockLineType } from "./enums/block-line-types.enum";
 import { TagModel } from "./tag-model.class";
+import { ComplexConditionModel } from "./complex-condition-model.class";
 
 export class GameBlockLineModel {
 
   type: BlockLineType;
   condition: ConditionModel;
+  complexCondition: ComplexConditionModel;
   lines: GameBlockLineModel[];
   text: string;
   formats: string[] = [];
@@ -52,7 +54,7 @@ export class GameBlockLineModel {
       let conditionResult: ParsingResult = subResults[0].getFirstResult("condition/conditionBody");
 
       if (conditionResult) {
-        line.condition = ConditionModel.loadCondition(conditionResult);
+        line.complexCondition = ComplexConditionModel.loadCondition(conditionResult);
       }
 
       line.lines = GameBlockLineModel.loadLines(subResults[0].getResults("blocks"));
