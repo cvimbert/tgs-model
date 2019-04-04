@@ -3,7 +3,7 @@ import { ConditionModel } from "./condition-model.class";
 
 export class ComplexConditionModel {
 
-    operand1: ComplexConditionModel;
+    operand1: ConditionModel;
     operand2: ComplexConditionModel;
     operator: string;
 
@@ -37,7 +37,7 @@ export class ComplexConditionModel {
     }
 
     static loadOperands(model: ComplexConditionModel, result: ParsingResult) {
-        model.operand1 = this.loadCondition(result.getFirstResult("operand1"));
+        model.operand1 = ConditionModel.loadCondition(result.getFirstResult("operand1"));
         model.operand2 = this.loadCondition(result.getFirstResult("operand2"));
         model.operator = result.getFirstResult("operator").getFirstKey();
     }
