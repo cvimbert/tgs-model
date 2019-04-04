@@ -3,6 +3,7 @@ import { ScriptInstructionType } from "../enums/script-instruction-type.enum";
 import { ConditionModel } from "./condition-model.class";
 import { ArgumentModel } from "./argument-model.class";
 import { ComparisonOperandModel } from './comparison-operand-model.class';
+import { ComplexConditionModel } from "./complex-condition-model.class";
 
 export class ScriptInstructionModel {
 
@@ -13,7 +14,7 @@ export class ScriptInstructionModel {
   commandArguments: ArgumentModel[];
 
   // cas if (ou potentiellement for)
-  condition: ConditionModel;
+  condition: ComplexConditionModel;
   instructions: ScriptInstructionModel[];
 
   // cas d'une assignation
@@ -46,7 +47,7 @@ export class ScriptInstructionModel {
 
     if (ifRes) {
       model.type = ScriptInstructionType.IF;
-      model.condition = ConditionModel.loadCondition(ifRes.getFirstResult("condition"));
+      model.condition = ComplexConditionModel.loadCondition(ifRes.getFirstResult("condition"));
       model.instructions = this.loadInstructions(ifRes.getResults("commandsGroup/instructions"));
     }
 
