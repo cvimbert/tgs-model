@@ -21,18 +21,15 @@ export class ComplexConditionModel {
                 break;
 
             case "expressionInParenthesis":
-                // à faire
-                console.log("ici ???");
                 this.loadOperands(model, result.getFirstResult("expressionInParenthesis/expression"));
                 break;
 
             case "conditionGroup":
                 model.simpleCondition = ConditionModel.loadCondition(result);
-                console.log(model);
+                //console.log(model);
                 break;
         }
 
-        console.log(result, model, type);
         return model;
     }
 
