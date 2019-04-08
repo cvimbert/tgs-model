@@ -30,6 +30,12 @@ export class MainStructure {
       structure.blocksArray.push(structure.blocks[key]);
     }
 
+    structure.blocksArray.forEach(block => {
+      block.links.forEach(link => {
+
+      });
+    });
+
     //console.log(structure);
     return structure;
   }

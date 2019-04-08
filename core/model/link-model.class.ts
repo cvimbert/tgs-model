@@ -2,6 +2,7 @@ import { ParsingResult } from "tgs-parser";
 import { ConditionModel } from "./condition-model.class";
 import { LinkDirectiveModel } from "./link-directive-model.class";
 import { ComplexConditionModel } from "./complex-condition-model.class";
+import { GameBlockModel } from "./game-block-model.class";
 
 export class LinkModel {
 
@@ -12,6 +13,8 @@ export class LinkModel {
   complexCondition: ComplexConditionModel;
   directives: LinkDirectiveModel[];
 
+  nestedBlock: GameBlockModel;
+
   static loadLink(result: ParsingResult): LinkModel {
 
     //console.log("link", result);
@@ -20,8 +23,28 @@ export class LinkModel {
 
     model.text = result.getFirstValue("simpleLinkText@text");
     
-    model.localLinkRef = result.getFirstValue("link/localRef/blockId@id");
-    model.globalLinkRef = result.getFirstValue("link/globalRef@ref");
+    let localRes = result.getFirstResult("link");
+
+    //console.log(localRes);
+
+    // pas logique de vérifier ici si on a des results dans localRes
+    if (localRes && localRes.results) {
+      let sres = localRes.getFirstResult("localRef");
+
+      if (sres) {
+        model.localLinkRef = sres.getFirstValue("blockId@id");
+      }
+
+      model.globalLinkRef = result.getFirstValue("link/globalRef@ref");
+    }
+
+    let nestedRes = result.getFirstResult("nestedBlock");
+
+    if (nestedRes) {
+      console.log(nestedRes);
+      model.nestedBlock = GameBlockModel.loadBlock(nestedRes, "");
+      console.log(model.nestedBlock);
+    }
 
     let conditionResult: ParsingResult = result.getFirstResult("condition");
 
