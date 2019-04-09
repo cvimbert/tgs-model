@@ -30,6 +30,8 @@ export class GameBlockModel {
     block.links = LinkModel.loadLinks(result.getResults("blockLinks"), id);
     block.redirections = LinkModel.loadRedirections(result.getResults("directLink"));
 
+    //console.log(result, block.redirections);
+
     let scripts: ParsingResult[] = result.getResults("scripts");
 
     if (scripts) {
