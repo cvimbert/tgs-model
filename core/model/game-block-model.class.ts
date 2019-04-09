@@ -27,7 +27,7 @@ export class GameBlockModel {
 
     block.id = id;
     block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
-    block.links = LinkModel.loadLinks(result.getResults("blockLinks"));
+    block.links = LinkModel.loadLinks(result.getResults("blockLinks"), id);
     block.redirections = LinkModel.loadRedirections(result.getResults("directLink"));
 
     let scripts: ParsingResult[] = result.getResults("scripts");

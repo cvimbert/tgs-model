@@ -3,6 +3,7 @@ import { ConditionModel } from "./condition-model.class";
 import { LinkDirectiveModel } from "./link-directive-model.class";
 import { ComplexConditionModel } from "./complex-condition-model.class";
 import { GameBlockModel } from "./game-block-model.class";
+import { MainStructure } from "./main-structure.class";
 
 export class LinkModel {
 
@@ -15,7 +16,7 @@ export class LinkModel {
 
   nestedBlock: GameBlockModel;
 
-  static loadLink(result: ParsingResult): LinkModel {
+  static loadLink(result: ParsingResult, parentBlockId: string): LinkModel {
 
     //console.log("link", result);
 
@@ -41,9 +42,12 @@ export class LinkModel {
     let nestedRes = result.getFirstResult("nestedBlock");
 
     if (nestedRes) {
-      console.log(nestedRes);
-      model.nestedBlock = GameBlockModel.loadBlock(nestedRes, "");
-      console.log(model.nestedBlock);
+      let nestedBlockId: string = nestedRes.getFirstValue("blockId/blockId@id");
+      //console.log(nestedBlockId, nestedRes);
+      model.nestedBlock = GameBlockModel.loadBlock(nestedRes, nestedBlockId);
+      //console.log(model.nestedBlock);
+
+      model.localLinkRef = MainStructure.getNestedBlockId(parentBlockId, nestedBlockId);
     }
 
     let conditionResult: ParsingResult = result.getFirstResult("condition");
@@ -63,8 +67,8 @@ export class LinkModel {
     return model;
   }
 
-  static loadLinks(results: ParsingResult[]): LinkModel[] {
-    return results ? results.map(res => this.loadLink(res)) : null;
+  static loadLinks(results: ParsingResult[], parentBlockId: string): LinkModel[] {
+    return results ? results.map(res => this.loadLink(res, parentBlockId)) : null;
   }
 
   static loadRedirection(result: ParsingResult): LinkModel {

@@ -13,6 +13,10 @@ export class MainStructure {
   // peut-être pas nécessaire si on emploie un nom spécifique pour le bloc d'entrée
   entryBlockId: string;
 
+  static getNestedBlockId(parentId: string, nestedId: string): string {
+    return parentId + "$" + nestedId;
+  }
+
   static loadFromParsingResult(result: ParsingResult): MainStructure {
 
     let conditionsResults: ParsingResult[] = result.getResults("conditions") || [];
@@ -32,7 +36,11 @@ export class MainStructure {
 
     structure.blocksArray.forEach(block => {
       block.links.forEach(link => {
-
+        if (link.nestedBlock) {
+          let newId = this.getNestedBlockId(block.id, link.nestedBlock.id);
+          structure.blocks[newId] = link.nestedBlock;
+          structure.blocksArray.push(link.nestedBlock);
+        }
       });
     });
 
