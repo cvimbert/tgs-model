@@ -1,5 +1,4 @@
 import { ParsingResult } from "tgs-parser";
-import { ConditionModel } from "./condition-model.class";
 import { LinkDirectiveModel } from "./link-directive-model.class";
 import { ComplexConditionModel } from "./complex-condition-model.class";
 import { GameBlockModel } from "./game-block-model.class";

@@ -35,13 +35,15 @@ export class MainStructure {
     }
 
     structure.blocksArray.forEach(block => {
-      block.links.forEach(link => {
-        if (link.nestedBlock) {
-          let newId = this.getNestedBlockId(block.id, link.nestedBlock.id);
-          structure.blocks[newId] = link.nestedBlock;
-          structure.blocksArray.push(link.nestedBlock);
-        }
-      });
+      if (block.links) {
+        block.links.forEach(link => {
+          if (link.nestedBlock) {
+            let newId = this.getNestedBlockId(block.id, link.nestedBlock.id);
+            structure.blocks[newId] = link.nestedBlock;
+            structure.blocksArray.push(link.nestedBlock);
+          }
+        });
+      }
     });
 
     //console.log(structure);
