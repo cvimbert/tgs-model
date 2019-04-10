@@ -75,12 +75,16 @@ export class GameBlockLineModel {
     }
   }
 
+  static isSeparator(line: GameBlockLineModel): boolean {
+    return line.type === BlockLineType.PARAGRAPH_SEPARATOR || line.type === BlockLineType.LINE_BREAK;
+  }
+
   static loadLines(results: ParsingResult[]): GameBlockLineModel[] {
     let lines: GameBlockLineModel[] = results ? results.map(res => GameBlockLineModel.loadLine(res)) : [];
 
     // suppression des premiers vides, et des derniers
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].type == BlockLineType.PARAGRAPH_SEPARATOR) {
+      if (this.isSeparator(lines[i])) {
         lines.splice(i, 1);
         i--;
       } else {
@@ -89,7 +93,7 @@ export class GameBlockLineModel {
     }
 
     for (let i = lines.length - 1; i >= 0; i--) {
-      if (lines[i].type == BlockLineType.PARAGRAPH_SEPARATOR) {
+      if (this.isSeparator(lines[i])) {
         lines.splice(i, 1);
       } else {
         break;
