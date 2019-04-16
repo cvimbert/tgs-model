@@ -11,6 +11,9 @@ export class GameBlockModel {
   links: LinkModel[] = [];
   redirections: LinkModel[];
 
+  startIndex: number;
+  endIndex: number;
+
   static loadBlocks(results: ParsingResult[]): {[key: string]: GameBlockModel} {
     let dic: {[key: string]: GameBlockModel} = {};
 
@@ -29,6 +32,9 @@ export class GameBlockModel {
     block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
     block.links = LinkModel.loadLinks(result.getResults("blockLinks"), id);
     block.redirections = LinkModel.loadRedirections(result.getResults("directLink"));
+
+    block.startIndex = result.startIndex;
+    block.endIndex = result.endIndex;
 
     //console.log(result, block.redirections);
 
