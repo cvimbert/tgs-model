@@ -9,6 +9,8 @@ export class MainStructure {
   conditions: {[key: string]: ConditionModel};
   blocks: {[key: string]: GameBlockModel};
   blocksArray: GameBlockModel[] = [];
+  valid: boolean;
+  endIndex: number;
 
   // peut-être pas nécessaire si on emploie un nom spécifique pour le bloc d'entrée
   entryBlockId: string;
@@ -24,6 +26,9 @@ export class MainStructure {
     let blocksResults: ParsingResult[] = result.getResults("gameBlocks");
 
     let structure = new MainStructure();
+
+    structure.valid = result.endIndex >= result.originalString.replace(/\s*$/, "").length;
+    structure.endIndex = result.endIndex;
     
     structure.conditions = ConditionModel.loadConditionsDeclarations(conditionsResults);
     structure.scripts = ScriptModel.loadScripts(scriptResults);
