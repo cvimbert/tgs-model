@@ -29,13 +29,16 @@ export class LinkModel {
 
     // pas logique de vérifier ici si on a des results dans localRes
     if (localRes && localRes.results) {
-      let sres = localRes.getFirstResult("localRef");
+      let sres = localRes.getFirstResult("ref");
+
+      //console.log(sres);
 
       if (sres) {
-        model.localLinkRef = sres.getFirstValue("blockId@id");
-      }
+        model.localLinkRef = sres.groups["localRef"];
+        model.globalLinkRef = sres.groups["globalRef"];
 
-      model.globalLinkRef = result.getFirstValue("link/globalRef@ref");
+        //console.log(model);
+      }
     }
 
     let nestedRes = result.getFirstResult("nestedBlock");
