@@ -19,7 +19,7 @@ export class GameBlockLineModel {
 
     let subResults: ParsingResult[] = result.getResults("simpleLine");
 
-    //console.log(result);
+    console.log(result);
 
     if (subResults) {
 
@@ -48,8 +48,13 @@ export class GameBlockLineModel {
 
     subResults = result.getResults("conditionalBlock");
 
+    console.log(subResults);
+
     if (subResults) {
       line.type = BlockLineType.COMPLEX;
+
+      console.log(subResults)
+
 
       let conditionResult: ParsingResult = subResults[0].getFirstResult("condition/conditionBody");
 
