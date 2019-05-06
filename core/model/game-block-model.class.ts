@@ -2,17 +2,41 @@ import { ParsingResult } from "tgs-parser";
 import { GameBlockLineModel } from "./game-block-line-model.class";
 import { LinkModel } from "./link-model.class";
 import { ScriptModel } from "./script-model.class";
+import { BlockModifierModel } from "./block-modifier-model.class";
 
 export class GameBlockModel {
 
   id: string;
-  scripts: {[key: string]: ScriptModel };
+  scripts: {[key: string]: ScriptModel};
   lines: GameBlockLineModel[] = [];
   links: LinkModel[] = [];
   redirections: LinkModel[];
+  modifiers: {[key: string]: BlockModifierModel};
 
   startIndex: number;
   endIndex: number;
+
+
+  fusionBefore(target: GameBlockModel) {
+    this.lines = target.lines.concat(this.lines);
+    this.links = target.links.concat(this.links);
+    this.redirections = target.redirections.concat(this.redirections);
+    this.miscFusion(target);
+  }
+
+  fusionAfter(target: GameBlockModel) {
+    this.lines = this.lines.concat(target.lines);
+    this.links = this.links.concat(target.links);
+    this.redirections = this.redirections.concat(target.redirections);
+    this.miscFusion(target);
+  }
+
+  miscFusion(target: GameBlockModel) {
+    // scripts
+    for (let scriptId in target.scripts) {
+      this.scripts[scriptId] = target.scripts[scriptId];
+    }
+  }
 
   static loadBlocks(results: ParsingResult[]): {[key: string]: GameBlockModel} {
     let dic: {[key: string]: GameBlockModel} = {};
@@ -29,9 +53,10 @@ export class GameBlockModel {
     let block: GameBlockModel = new GameBlockModel();
 
     block.id = id;
-    block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines"));
-    block.links = LinkModel.loadLinks(result.getResults("blockLinks"), id);
-    block.redirections = LinkModel.loadRedirections(result.getResults("directLink"));
+    block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines") || []);
+    block.links = LinkModel.loadLinks(result.getResults("blockLinks") || [], id);
+    block.redirections = LinkModel.loadRedirections(result.getResults("directLink") || []);
+    block.modifiers = BlockModifierModel.loadModifiers(result.getResults("modifiers") || []);
 
     block.startIndex = result.startIndex;
     block.endIndex = result.endIndex;

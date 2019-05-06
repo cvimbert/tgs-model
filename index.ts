@@ -1,3 +1,4 @@
+export { BlockModifierModel } from "./core/model/block-modifier-model.class";
 export { ComplexConditionModel } from "./core/model/complex-condition-model.class";
 export { TagModel } from "./core/model/tag-model.class";
 export { GameBlockLineModel } from "./core/model/game-block-line-model.class";

@@ -2,6 +2,7 @@ import { ParsingResult } from "tgs-parser";
 import { ScriptModel } from "./script-model.class";
 import { GameBlockModel } from "./game-block-model.class";
 import { ConditionModel } from "./condition-model.class";
+import { BlockModifierModel } from "./block-modifier-model.class";
 
 export class MainStructure {
 
@@ -48,6 +49,42 @@ export class MainStructure {
             structure.blocksArray.push(link.nestedBlock);
           }
         });
+      }
+    });
+
+    // passe de modification des blocs
+    structure.blocksArray.forEach(block => {
+      for (let modifierId in block.modifiers) {
+
+        let modifier: BlockModifierModel = block.modifiers[modifierId];
+        let targetBlock: GameBlockModel;
+
+        switch(modifierId) {
+          case "before":
+            // texte et liens sont insérés avant le texte et les liens du bloc courant
+            
+            modifier.blockIds.forEach(blockId => {
+              targetBlock = structure.blocks[blockId];
+
+              /*block.lines = targetBlock.lines.concat(block.lines);
+              block.links = targetBlock.links.concat(block.links);*/
+
+              block.fusionBefore(targetBlock);
+            });
+
+            // block.lines = block.line
+            break;
+
+          case "after":
+            // même chose, mais après
+
+            modifier.blockIds.forEach(blockId => {
+              targetBlock = structure.blocks[blockId];
+              block.fusionAfter(targetBlock);
+            });
+
+            break;
+        }
       }
     });
 
