@@ -1,3 +1,4 @@
+export { FunctionModel } from "./core/model/function-model.class";
 export { BlockModifierModel } from "./core/model/block-modifier-model.class";
 export { ComplexConditionModel } from "./core/model/complex-condition-model.class";
 export { TagModel } from "./core/model/tag-model.class";

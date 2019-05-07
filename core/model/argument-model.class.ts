@@ -1,11 +1,13 @@
 import { ArgumentType } from "../enums/argument-type.enum";
 import { ParsingResult } from "tgs-parser";
+import { FunctionModel } from "./function-model.class";
 
 export class ArgumentModel {
 
   type: ArgumentType;
   value: any;
   variableName: string;
+  function: FunctionModel;
 
   static loadArgument(result: ParsingResult): ArgumentModel {
     let model = new ArgumentModel();
@@ -26,6 +28,10 @@ export class ArgumentModel {
       case "variable":
         model.type = ArgumentType.VARIABLE;
         model.variableName = result.getFirstValue("variable/variableName@name");
+        break;
+      case "function":
+        model.type = ArgumentType.FUNCTION;
+        model.function = FunctionModel.loadFunction(result.getFirstResult("function"));
         break;
     }
 
