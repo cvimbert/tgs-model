@@ -18,24 +18,27 @@ export class GameBlockModel {
 
 
   fusionBefore(target: GameBlockModel) {
-    this.lines = target.lines.concat(this.lines);
-    this.links = target.links.concat(this.links);
-    this.redirections = target.redirections.concat(this.redirections);
+    this.lines = target.lines.concat(this.lines || []);
+    this.links = target.links.concat(this.links || []);
+    this.redirections = target.redirections.concat(this.redirections || []);
     this.miscFusion(target);
   }
 
   fusionAfter(target: GameBlockModel) {
-    this.lines = this.lines.concat(target.lines);
-    this.links = this.links.concat(target.links);
-    this.redirections = this.redirections.concat(target.redirections);
+    this.lines = this.lines.concat(target ? target.lines : []);
+    this.links = this.links.concat(target ? target.links : []);
+    this.redirections = this.redirections.concat(target ? target.redirections : []);
     this.miscFusion(target);
   }
 
   miscFusion(target: GameBlockModel) {
     // scripts
-    for (let scriptId in target.scripts) {
-      this.scripts[scriptId] = target.scripts[scriptId];
+    if (target && target.scripts) {
+      for (let scriptId in target.scripts) {
+        this.scripts[scriptId] = target.scripts[scriptId];
+      }
     }
+    
   }
 
   static loadBlocks(results: ParsingResult[]): {[key: string]: GameBlockModel} {
