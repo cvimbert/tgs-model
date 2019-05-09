@@ -35,7 +35,7 @@ export class ScriptInstructionModel {
       model.commandArguments = ArgumentModel.loadArguments(commandRes.getResults("arguments"));
     }
 
-    let functionRes: ParsingResult = result.getFirstResult("function");
+    let functionRes: ParsingResult = result.getFirstResult("function/functionBody");
 
     if (functionRes) {
       model.type = ScriptInstructionType.COMMAND;
