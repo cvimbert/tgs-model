@@ -22,9 +22,9 @@ export class MainStructure {
 
   static loadFromParsingResult(result: ParsingResult): MainStructure {
 
-    let conditionsResults: ParsingResult[] = result.getResults("conditions") || [];
-    let scriptResults: ParsingResult[] = result.getResults("scripts") || [];
-    let blocksResults: ParsingResult[] = result.getResults("gameBlocks");
+    let conditionsResults: ParsingResult[] = result.getResults("items/condition") || [];
+    let scriptResults: ParsingResult[] = result.getResults("items/script") || [];
+    let blocksResults: ParsingResult[] = result.getResults("items/gameBlock") || [];
 
     let structure = new MainStructure();
 

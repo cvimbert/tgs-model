@@ -57,8 +57,8 @@ export class GameBlockModel {
 
     block.id = id;
     block.lines = GameBlockLineModel.loadLines(result.getResults("blockLines") || []);
-    block.links = LinkModel.loadLinks(result.getResults("blockLinks") || [], id);
-    block.redirections = LinkModel.loadRedirections(result.getResults("directLink") || []);
+    block.links = LinkModel.loadLinks(result.getResults("linkItems/blockLink") || [], id);
+    block.redirections = LinkModel.loadRedirections(result.getResults("linkItems/directLink") || []);
     block.modifiers = BlockModifierModel.loadModifiers(result.getResults("modifiers") || []);
 
     block.startIndex = result.startIndex;

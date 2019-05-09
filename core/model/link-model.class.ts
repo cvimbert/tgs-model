@@ -52,7 +52,7 @@ export class LinkModel {
       model.localLinkRef = MainStructure.getNestedBlockId(parentBlockId, nestedBlockId);
     }
 
-    let conditionResult: ParsingResult = result.getFirstResult("condition");
+    let conditionResult: ParsingResult = result.getFirstResult("modifiers/condition");
 
     if (conditionResult) {
       //console.log("ccc", conditionResult);
@@ -64,7 +64,7 @@ export class LinkModel {
       //console.log("ici", model);
     }
 
-    model.directives = LinkDirectiveModel.loadDirectives(result.getResults("linkDirectives/directives"));
+    model.directives = LinkDirectiveModel.loadDirectives(result.getResults("modifiers/linkDirectives/directives"));
 
     return model;
   }
