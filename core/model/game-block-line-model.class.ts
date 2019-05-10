@@ -3,6 +3,7 @@ import { ConditionModel } from "./condition-model.class";
 import { BlockLineType } from "./enums/block-line-types.enum";
 import { TagModel } from "./tag-model.class";
 import { ComplexConditionModel } from "./complex-condition-model.class";
+import { ScriptModel } from "./script-model.class";
 
 export class GameBlockLineModel {
 
@@ -13,6 +14,7 @@ export class GameBlockLineModel {
   text: string;
   formats: string[] = [];
   tag: TagModel;
+  scripts: {[key: string]: ScriptModel};
 
   static loadLine(result: ParsingResult): GameBlockLineModel {
     let line: GameBlockLineModel = new GameBlockLineModel();
@@ -65,6 +67,10 @@ export class GameBlockLineModel {
       line.lines = GameBlockLineModel.loadLines(subResults[0].getResults("blocks"));
 
       line.formats = subResults[0].getValue("format/formatsList@name");
+
+      line.scripts = ScriptModel.loadScripts(subResults[0].getResults("scripts"));
+
+      //console.log(line.scripts);
 
       //console.log(line.formats);
       return line;

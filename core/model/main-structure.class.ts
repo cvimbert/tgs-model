@@ -65,10 +65,6 @@ export class MainStructure {
             
             modifier.blockIds.forEach(blockId => {
               targetBlock = structure.blocks[blockId];
-
-              /*block.lines = targetBlock.lines.concat(block.lines);
-              block.links = targetBlock.links.concat(block.links);*/
-
               block.fusionBefore(targetBlock);
             });
 

@@ -6,6 +6,11 @@ export class ScriptModel {
   instructions: ScriptInstructionModel[];
 
   static loadScripts(results: ParsingResult[]): {[key: string]: ScriptModel} {
+
+    if (!results) {
+      return {};
+    }
+
     let dic: {[key: string]: ScriptModel} = {};
 
     results.forEach(res => {
