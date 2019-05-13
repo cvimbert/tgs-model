@@ -64,7 +64,9 @@ export class LinkModel {
       //console.log("ici", model);
     }
 
-    model.directives = LinkDirectiveModel.loadDirectives(result.getResults("modifiers/linkDirectives/directives"));
+    model.directives = LinkDirectiveModel.loadDirectives(result.getResults("modifiers/linkDirective/directives"));
+
+    // console.log(model.directives.length);
 
     return model;
   }
